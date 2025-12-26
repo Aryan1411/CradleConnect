@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="A secure, compassionate, and compliant platform connecting intended parents, verified surrogate mothers, and trusted hospitals/clinics. Focused on trust, transparency, safety, and dignity."/>
+  <title>KindPath Surrogacy — Safe, Transparent, Compassionate</title>
+  <style>
+    :root{
+      --bg:#f7fbfd;
+      --bg-soft:#eef7fb;
+      --bg-warm:#f8faf7;
+      --primary:#2b7a78; /* teal */
+      --primary-600:#266a69;
+      --accent:#3aa39b;
+      --text:#2f3a3d;
+      --muted:#5d6b70;
+      --line:#d9e6ea;
+      --ok:#2e7d32;
+      --warn:#a15d00;
+      --error:#b00020;
+      --card:#ffffff;
+      --focus:#0a84ff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.5}
+    a{color:var(--primary);text-decoration:none}
+    a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:3px solid var(--focus);outline-offset:2px}
+    header{
+      position:sticky;top:0;z-index:5;background:linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
+      border-bottom:1px solid var(--line)
+    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:36px;height:36px;border-radius:8px;background:
+      conic-gradient(from 180deg at 50% 50%, #e6f5f1 0deg, #eaf6ff 180deg, #f7f7f7 360deg);
+      border:1px solid var(--line);display:grid;place-items:center;font-weight:700;color:var(--primary)
+    }
+    .brand h1{font-size:18px;margin:0}
+    nav{display:flex;gap:12px;flex-wrap:wrap}
+    nav a{padding:8px 10px;border-radius:8px}
+    nav a:hover{background:var(--bg-soft)}
+    .controls{display:flex;gap:8px;align-items:center}
+    .pill{
+      background:#fff;border:1px solid var(--line);padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:8px
+    }
+    .btn{
+      background:var(--primary);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-weight:600;cursor:pointer
+    }
+    .btn.secondary{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+    .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--primary)}
+    .btn:disabled{opacity:0.6;cursor:not-allowed}
+    .hero{max-width:1200px;margin:16px auto;padding:20px;border-radius:16px;background:linear-gradient(180deg,#eaf6ff, #e6f5f1);}
+    .hero-inner{display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px}
+    .hero h2{margin:0 0 8px 0;font-size:28px}
+    .sub{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+    .grid{display:grid;gap:14px}
+    .two{grid-template-columns:1fr 1fr}
+    .three{grid-template-columns:repeat(3,1fr)}
+    .four{grid-template-columns:repeat(4,1fr)}
+    @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.two,.three,.four{grid-template-columns:1fr}}
+    section{max-width:1200px;margin:20px auto;padding:0 16px}
+    h3.section-title{margin:12px 0}
+    label{display:block;font-weight:600;margin:6px 0 4px}
+    input,select,textarea{
+      width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--text)
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:#f1f7f9;border:1px solid var(--line);font-size:12px}
+    .verified{color:var(--ok)}
+    .danger{color:var(--error)}
+    .success{color:var(--ok)}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .center{display:flex;justify-content:center;align-items:center}
+    .hidden{display:none !important}
+    .table{width:100%;border-collapse:collapse;font-size:14px}
+    .table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+    .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0b3d3a;color:#fff;padding:10px 12px;border-radius:8px;display:none}
+    .statusbar{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px}
+    .compare-bar{position:sticky;bottom:0;z-index:5;background:#ffffffd9;border-top:1px solid var(--line);backdrop-filter:saturate(180%) blur(8px);padding:10px}
+    .modal{position:fixed;inset:0;background:#00000066;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal .dialog{background:#fff;border-radius:12px;max-width:640px;width:100%;padding:16px;border:1px solid var(--line);max-height:90vh;overflow:auto}
+    .notice{background:#fff8e1;border:1px solid #ffe0a3;color:#584400;padding:10px;border-radius:8px}
+    .ok{background:#e8f5e9;border:1px solid #c8e6c9;color:#1b5e20;padding:10px;border-radius:8px}
+    .warn{background:#fff3f0;border:1px solid #ffd4cb;color:#7b2e1f;padding:10px;border-radius:8px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .cta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .kpi{display:flex;gap:10px;align-items:center}
+    .kpi strong{font-size:22px}
+    .flag{display:inline-flex;gap:6px;align-items:center}
+    .deemph{opacity:.8}
+    .separator{height:1px;background:var(--line);margin:10px 0}
+    .linklike{color:var(--primary);text-decoration:underline;background:none;border:none;padding:0;cursor:pointer}
+    .accordion summary{cursor:pointer;padding:10px;border-radius:8px;background:#f6fbfd;border:1px solid var(--line);font-weight:600}
+    .accordion div{padding:10px}
+    /* Print */
+    @media print {
+      body *{visibility:hidden !important}
+      #estimatePrint, #estimatePrint *{visibility:visible !important}
+      #estimatePrint{position:absolute;left:0;top:0;width:100%}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to content</a>
+  <header role="banner" aria-label="Site header">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">KP</div>
+        <h1>KindPath Surrogacy</h1>
+        <span class="tag" title="Demo only — do not enter sensitive information">Demo</span>
+      </div>
+      <nav aria-label="Main">
+        <a href="#home" data-nav>Home</a>
+        <a href="#parents" data-nav>Intended Parents</a>
+        <a href="#surrogates" data-nav>Surrogate Mothers</a>
+        <a href="#hospitals" data-nav>Hospitals & Clinics</a>
+        <a href="#pricing" data-nav>Pricing</a>
+        <a href="#trust" data-nav>Trust & Compliance</a>
+        <a href="#learn" data-nav>Learn</a>
+        <a href="#community" data-nav>Community</a>
+      </nav>
+      <div class="controls">
+        <div class="pill" aria-label="Role selector">
+          <label for="role" class="sr-only">Role</label>
+          <select id="role" aria-label="Select role">
+            <option value="parent">Intended Parent</option>
+            <option value="surrogate">Surrogate</option>
+            <option value="hospital">Hospital/Clinic</option>
+          </select>
+        </div>
+        <div class="pill">
+          <label for="lang" class="sr-only">Language</label>
+          <select id="lang" aria-label="Language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+        <button class="btn secondary" id="openProfileBtn">Profile</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="home" aria-labelledby="homeTitle">
+      <div class="hero">
+        <div class="hero-inner">
+          <div>
+            <h2 id="homeTitle" data-i18n="heroTitle">Begin Your Journey Safely</h2>
+            <p class="sub" data-i18n="heroSubtitle">A compassionate, transparent, and medically responsible way to connect intended parents, surrogate mothers, and trusted hospitals.</p>
+            <div class="cta-row">
+              <button class="btn" onclick="goto('#parents')" data-i18n="ctaJourney">Find a Verified Surrogacy Partner</button>
+              <button class="btn ghost" onclick="goto('#hospitals')" data-i18n="ctaHospitals">Explore Trusted Hospitals</button>
+              <button class="btn ghost" onclick="goto('#learn')" data-i18n="ctaLearn">Learn Before You Decide</button>
+            </div>
+            <div class="row" style="margin-top:14px">
+              <div class="kpi card"><strong>100%</strong><span>Consent-based matching</span></div>
+              <div class="kpi card"><strong>Encrypted</strong><span>Local secure messaging</span></div>
+              <div class="kpi card"><strong>Compliance</strong><span>Legal & medical guidance</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="statusbar">
+              <span class="badge">Government & Medical Compliance</span>
+              <span class="badge">Privacy by Design</span>
+              <span class="badge">Ethics First</span>
+            </div>
+            <div class="separator"></div>
+            <p class="small muted">This demo keeps all data in your browser only. Do not enter sensitive personal or health information. Consult licensed professionals for legal and medical advice.</p>
+            <ul class="small">
+              <li>Minimalist, medical-grade UI with accessibility in mind</li>
+              <li>Anonymous profiles until mutual consent</li>
+              <li>Transparent pricing with no-hidden-costs policy</li>
+              <li>AI-assisted compatibility suggestions (demo)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="parents" aria-labelledby="parentsTitle">
+      <h3 class="section-title" id="parentsTitle">For Intended Parents</h3>
+      <div class="grid two">
+        <div class="card">
+          <h4>Create a Verified Profile</h4>
+          <p class="muted small">Identity and basic medical eligibility checks help build trust. In this demo, data never leaves your browser.</p>
+          <div class="grid">
+            <div>
+              <label for="pName">Your Name (or alias)</label>
+              <input id="pName" placeholder="E.g., Alex & Sam">
+            </div>
+            <div>
+              <label for="pLocation">Location</label>
+              <input id="pLocation" placeholder="City, Region">
+            </div>
+            <div>
+              <label for="pEligibility">Medical Eligibility (attested)</label>
+              <select id="pEligibility">
+                <option>Pending</option>
+                <option>Eligible (attested)</option>
+                <option>Not yet evaluated</option>
+              </select>
+            </div>
+            <div>
+              <label for="pIdAttest">Identity Attestation</label>
+              <select id="pIdAttest">
+                <option>Not provided</option>
+                <option>Provided</option>
+              </select>
+            </div>
+            <div>
+              <label for="pContact">Contact Email (optional)</label>
+              <input id="pContact" placeholder="Optional; shared only upon consent">
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="saveParentProfile">Save Profile</button>
+            <span id="parentProfileStatus" class="tag">Not saved</span>
+          </div>
+          <p class="small muted">Note: Verification in production requires licensed third-party checks and medical provider confirmation.</p>
+        </div>
+
+        <div class="card">
+          <h4>Search & Filter Surrogate Profiles</h4>
+          <div class="grid two">
+            <div>
+              <label for="filterLocation">Location</label>
+              <input id="filterLocation" placeholder="e.g., California">
+            </div>
+            <div>
+              <label for="filterAge">Max Age</label>
+              <input id="filterAge" type="number" min="18" max="50" value="40">
+            </div>
+            <div>
+              <label for="filterExperience">Experience</label>
+              <select id="filterExperience">
+                <option value="">Any</option>
+                <option value="experienced">Experienced</option>
+                <option value="first-time">First-time</option>
+              </select>
+            </div>
+            <div>
+              <label for="filterHasChildren">Has given birth before</label>
+              <select id="filterHasChildren">
+                <option value="">Any</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="applySurrogateFilters">Search</button>
+            <button class="btn ghost" id="resetSurrogateFilters">Reset</button>
+          </div>
+          <div id="surrogateResults" class="grid two" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card">
+          <h4>Hospital Comparison Dashboard</h4>
+          <div class="grid two">
+            <div>
+              <label for="hFilterLocation">Location</label>
+              <input id="hFilterLocation" placeholder="e.g., Mumbai">
+            </div>
+            <div>
+              <label for="hFilterMaxPrice">Max Package Price (USD)</label>
+              <input id="hFilterMaxPrice" type="number" min="0" placeholder="e.g., 75000">
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="applyHospitalFilters">Filter</button>
+            <button class="btn ghost" id="resetHospitalFilters">Reset</button>
+          </div>
+          <div id="hospitalResults" class="grid two" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card">
+          <h4>Secure Messaging (Consent + Encryption)</h4>
+          <p class="small muted">Messaging unlocks only after mutual consent. Messages in this demo are encrypted with your passphrase and stored locally.</p>
+          <div class="grid two">
+            <div>
+              <label for="chatSurrogateId">Conversation with Surrogate</label>
+              <select id="chatSurrogateId"></select>
+            </div>
+            <div>
+              <label for="chatPass">Chat Passphrase</label>
+              <input id="chatPass" type="password" placeholder="Set a phrase both parties agree to">
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="unlockChatBtn">Unlock Conversation</button>
+            <button class="btn ghost" id="clearChatBtn">Clear History (local)</button>
+          </div>
+          <div id="chatBox" class="card hidden" aria-live="polite" style="margin-top:10px">
+            <div id="chatLog" style="max-height:200px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px;background:#fbfeff"></div>
+            <div class="row" style="margin-top:8px">
+              <input id="chatInput" placeholder="Type a message..." aria-label="Message">
+              <button class="btn" id="sendMsgBtn">Send</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Educational Guides</h4>
+          <div class="accordion">
+            <details>
+              <summary>How surrogacy works</summary>
+              <div>
+                Gestational surrogacy typically involves IVF where an embryo is transferred to a gestational carrier. Timelines can range from 12–18 months and include screening, legal agreements, embryo transfer, pregnancy, and delivery. Always consult licensed medical and legal professionals.
+              </div>
+            </details>
+            <details>
+              <summary>Legal frameworks (by region)</summary>
+              <div>
+                Laws vary by country and state. Some jurisdictions permit compensated surrogacy; others restrict or prohibit it. This platform provides general information only and does not constitute legal advice. Verify your local regulations and retain a qualified attorney.
+              </div>
+            </details>
+            <details>
+              <summary>Emotional considerations</summary>
+              <div>
+                Surrogacy journeys are deeply personal. Counseling and mental health support can be essential for all parties. Our tone and approach prioritize dignity, choice, and informed consent.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="surrogates" aria-labelledby="surrogatesTitle">
+      <h3 class="section-title" id="surrogatesTitle">For Surrogate Mothers</h3>
+      <div class="grid two">
+        <div class="card">
+          <h4>Guided Onboarding</h4>
+          <p class="small muted">You may remain anonymous until you grant consent to connect.</p>
+          <div class="grid">
+            <div>
+              <label for="sAlias">Public Alias</label>
+              <input id="sAlias" placeholder="e.g., CaringHeart07">
+            </div>
+            <div>
+              <label for="sLocation">Location</label>
+              <input id="sLocation" placeholder="City, Region">
+            </div>
+            <div>
+              <label for="sAge">Age</label>
+              <input id="sAge" type="number" min="21" max="50" placeholder="e.g., 29">
+            </div>
+            <div>
+              <label for="sExperience">Experience</label>
+              <select id="sExperience">
+                <option value="first-time">First-time</option>
+                <option value="experienced">Experienced</option>
+              </select>
+            </div>
+          </div>
+          <h5>Eligibility Checklist</h5>
+          <div class="grid two">
+            <label><input type="checkbox" id="sEligAge"> Age 21–45</label>
+            <label><input type="checkbox" id="sEligHealth"> Good general health</label>
+            <label><input type="checkbox" id="sEligBirth"> Previous healthy pregnancy</label>
+            <label><input type="checkbox" id="sEligPsych"> Psychological evaluation</label>
+          </div>
+          <h5>Compensation (Transparent)</h5>
+          <div class="grid two">
+            <div><label for="sCompBase">Base (USD)</label><input id="sCompBase" type="number" min="0" placeholder="e.g., 35000"></div>
+            <div><label for="sCompExtras">Extras (USD)</label><input id="sCompExtras" type="number" min="0" placeholder="e.g., 5000"></div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="saveSurrogateProfile">Save Profile</button>
+            <span id="surProfileStatus" class="tag">Not saved</span>
+          </div>
+          <p class="small muted">Rights & responsibilities are clearly explained in the Learn and Trust sections. You control what you share and when.</p>
+        </div>
+
+        <div class="card">
+          <h4>Consent Requests</h4>
+          <p class="small muted">Review and approve requests to reveal your contact details or enable messaging.</p>
+          <div id="consentRequestsList" class="grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hospitals" aria-labelledby="hospitalsTitle">
+      <h3 class="section-title" id="hospitalsTitle">Hospitals & Clinics Directory</h3>
+      <div class="grid two">
+        <div class="card">
+          <h4>Directory</h4>
+          <div id="hospitalList" class="grid two"></div>
+        </div>
+        <div class="card">
+          <h4>Book a Consultation</h4>
+          <p class="small muted">Appointments here are stored in your browser only.</p>
+          <div class="grid">
+            <div>
+              <label for="apptHospital">Hospital</label>
+              <select id="apptHospital"></select>
+            </div>
+            <div>
+              <label for="apptDate">Date</label>
+              <input id="apptDate" type="date">
+            </div>
+            <div>
+              <label for="apptTime">Time</label>
+              <input id="apptTime" type="time">
+            </div>
+            <div>
+              <label for="apptNotes">Notes</label>
+              <textarea id="apptNotes" rows="3" placeholder="Question topics or preferences"></textarea>
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="saveAppt">Schedule</button>
+            <button class="btn ghost" id="clearAppts">Clear All</button>
+          </div>
+          <div id="apptList" class="grid" style="margin-top:10px"></div>
+        </div>
+      </div>
+      <div class="compare-bar" id="compareBar" aria-live="polite">
+        <strong>Compare:</strong> <span id="compareNames"></span>
+        <button class="btn secondary" id="openCompare" disabled>Side-by-side</button>
+      </div>
+    </section>
+
+    <section id="pricing" aria-labelledby="pricingTitle">
+      <h3 class="section-title" id="pricingTitle">Pricing & Transparency</h3>
+      <div class="grid two">
+        <div class="card">
+          <h4>Build Your Estimate</h4>
+          <div class="notice small">This is a non-binding estimate. Prices vary by clinic, region, medical complexity, and legal requirements.</div>
+          <div class="grid two" style="margin-top:10px">
+            <div><label>Medical Costs (IVF & Screening)</label><input type="number" min="0" id="costMedical" value="18000"></div>
+            <div><label>Hospital Fees (Prenatal & Delivery)</label><input type="number" min="0" id="costHospital" value="22000"></div>
+            <div><label>Surrogate Compensation</label><input type="number" min="0" id="costComp" value="40000"></div>
+            <div><label>Legal & Administrative</label><input type="number" min="0" id="costLegal" value="8000"></div>
+            <div><label>Contingency (10%)</label><input type="number" min="0" id="costReserve" value="8800"></div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" id="calcEstimate">Calculate</button>
+            <button class="btn ghost" id="printEstimate">Download PDF</button>
+          </div>
+          <div id="estimate" class="card"></div>
+          <div id="estimatePrint" class="hidden"></div>
+        </div>
+        <div class="card">
+          <h4>No Hidden Costs</h4>
+          <ul>
+            <li>Line-by-line breakdown across medical, compensation, and legal domains</li>
+            <li>Clear refund and rollover policies for IVF cycles</li>
+            <li>Transparent hospital pricing and success rates where available</li>
+          </ul>
+          <h4>Legal Document Templates</h4>
+          <p class="small muted">For educational purposes only — not legal advice. Consult a licensed attorney.</p>
+          <div class="cta-row">
+            <button class="btn secondary" onclick="downloadTemplate('Surrogacy Agreement Outline', templates.agreement)">Download Agreement Outline</button>
+            <button class="btn secondary" onclick="downloadTemplate('Informed Consent Checklist', templates.consent)">Download Consent Checklist</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trust" aria-labelledby="trustTitle">
+      <h3 class="section-title" id="trustTitle">Trust, Safety & Compliance</h3>
+      <div class="grid three">
+        <div class="card">
+          <h4>Compliance Badges</h4>
+          <ul class="small">
+            <li class="flag">Government ID Attestation <span class="tag">Verified</span></li>
+            <li class="flag">Medical Eligibility Review <span class="tag">By Provider</span></li>
+            <li class="flag">Ethics Review <span class="tag">Internal</span></li>
+            <li class="flag">Data Encryption <span class="tag">Local</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Legal Framework</h4>
+          <p class="small">Surrogacy laws differ widely. Our platform offers general information and referrals to licensed professionals. Always conform to local jurisdictional requirements.</p>
+          <ul class="small">
+            <li>Jurisdiction-specific counsel</li>
+            <li>Consent-based matching and privacy-first design</li>
+            <li>Clear rights and responsibilities documentation</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Security</h4>
+          <ul class="small">
+            <li>Local encryption for demo messaging (AES-GCM)</li>
+            <li>No third-party scripts or trackers</li>
+            <li>Role-based views with minimal data exposure</li>
+            <li>Accessible design (WCAG-minded)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warn" style="margin-top:10px">
+        This demo is not a medical or legal service. Do not enter sensitive health or identity information. Consult licensed professionals before making decisions.
+      </div>
+    </section>
+
+    <section id="learn" aria-labelledby="learnTitle">
+      <h3 class="section-title" id="learnTitle">Learn</h3>
+      <div class="grid">
+        <div class="card">
+          <h4>Rights & Responsibilities</h4>
+          <ul>
+            <li>Informed consent at every step</li>
+            <li>Clear, written agreements before medical procedures</li>
+            <li>Respect, dignity, and the right to withdraw prior to legal commitments</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Medical Safety</h4>
+          <p class="small">Screenings may include infectious disease testing, OB/GYN evaluation, IVF readiness, and psychological assessment.</p>
+        </div>
+        <div class="card">
+          <h4>Emotional Support</h4>
+          <p>Consider independent counseling. Our community forum provides anonymous peer discussion. For crisis support, contact local services.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" aria-labelledby="communityTitle">
+      <h3 class="section-title" id="communityTitle">Anonymous Q&A Community</h3>
+      <div class="grid two">
+        <div class="card">
+          <h4>Ask a Question</h4>
+          <div class="notice small">Please avoid sharing personal identifiers or medical specifics. Be kind and respectful.</div>
+          <label for="qBody">Your Question</label>
+          <textarea id="qBody" rows="3" placeholder="What would you like to ask?"></textarea>
+          <div class="cta-row">
+            <button class="btn" id="postQuestion">Post</button>
+            <span class="small muted">Basic moderation filters applied.</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Latest Questions</h4>
+          <div id="qList" class="grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+      <div class="dialog">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4 id="profileTitle">Your Profile</h4>
+          <button class="btn ghost" onclick="closeModal('profileModal')">Close</button>
+        </div>
+        <div id="profileContent" class="grid"></div>
+      </div>
+    </div>
+
+    <div class="modal" id="compareModal" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+      <div class="dialog">
+        <div class="row" style="justify-content:space-between;align-items:center">
+          <h4 id="compareTitle">Hospital Comparison</h4>
+          <button class="btn ghost" onclick="closeModal('compareModal')">Close</button>
+        </div>
+        <div id="compareTableWrap">
+          <table class="table" id="compareTable"></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <noscript>
+    <div class="warn" style="margin:16px">
+      JavaScript is required for this demo to function. Please enable JavaScript.
+    </div>
+  </noscript>
+
+  <script>
+    // I18N (minimal)
+    const i18n = {
+      en: {
+        heroTitle: "Begin Your Journey Safely",
+        heroSubtitle: "A compassionate, transparent, and medically responsible way to connect intended parents, surrogate mothers, and trusted hospitals.",
+        ctaJourney: "Find a Verified Surrogacy Partner",
+        ctaHospitals: "Explore Trusted Hospitals",
+        ctaLearn: "Learn Before You Decide",
+      },
+      es: {
+        heroTitle: "Comience su camino con seguridad",
+        heroSubtitle: "Una manera compasiva, transparente y médicamente responsable de conectar padres intencionales, madres sustitutas y hospitales confiables.",
+        ctaJourney: "Encuentre una pareja verificada",
+        ctaHospitals: "Explore hospitales de confianza",
+        ctaLearn: "Aprenda antes de decidir",
+      }
+    };
+    function applyI18N(lang){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+      });
+    }
+    document.getElementById('lang').addEventListener('change', e=>applyI18N(e.target.value));
+    applyI18N('en');
+
+    function goto(hash){ location.hash = hash; document.querySelector(hash)?.scrollIntoView({behavior:'smooth'}); }
+    document.querySelectorAll('[data-nav]').forEach(a=>a.addEventListener('click',e=>{
+      e.preventDefault(); goto(e.target.getAttribute('href'));
+    }));
+    const toastEl = document.getElementById('toast');
+    function toast(msg, ms=2200){ toastEl.textContent = msg; toastEl.style.display='block'; setTimeout(()=>toastEl.style.display='none', ms); }
+
+    // Demo data
+    const surrogates = [
+      {id:'s1', alias:'HopefulCare', location:'California, USA', age:29, experience:'first-time', hasChildren:true, verified:true, anonymousUntilConsent:true, medSummary:'Non-smoker, previous healthy birth', compBase:35000, compExtras:5000},
+      {id:'s2', alias:'GentleJourney', location:'Texas, USA', age:33, experience:'experienced', hasChildren:true, verified:true, anonymousUntilConsent:true, medSummary:'Two prior surrogacies, O- blood type', compBase:42000, compExtras:8000},
+      {id:'s3', alias:'PeacefulSteps', location:'Ontario, Canada', age:27, experience:'first-time', hasChildren:false, verified:false, anonymousUntilConsent:true, medSummary:'Psych eval scheduled', compBase:30000, compExtras:4000},
+      {id:'s4', alias:'BrightHearts', location:'Maharashtra, India', age:31, experience:'experienced', hasChildren:true, verified:true, anonymousUntilConsent:true, medSummary:'Prior C-section x1, cleared by OB', compBase:28000, compExtras:6000},
+    ];
+    const hospitals = [
+      {id:'h1', name:'Evergreen Fertility Center', location:'California, USA', priceRange:65000, successRate:62, tech:['IVF Lab','PGT-A','NICU (partner)'], certifications:['CAP','CLIA'], rating:4.7, reviews:128},
+      {id:'h2', name:'Lotus Women’s Hospital', location:'Maharashtra, India', priceRange:38000, successRate:58, tech:['IVF Lab','Embryoscope'], certifications:['NABH'], rating:4.4, reviews:211},
+      {id:'h3', name:'Northern Lights Reproductive Care', location:'Ontario, Canada', priceRange:52000, successRate:60, tech:['IVF Lab','PGT-M','On-site NICU'], certifications:['Health Canada'], rating:4.6, reviews:96},
+      {id:'h4', name:'Harborview Family Clinic', location:'Texas, USA', priceRange:70000, successRate:65, tech:['IVF Lab','PGT-A','Donor Bank'], certifications:['CAP','AAALAC'], rating:4.8, reviews:173},
+    ];
+
+    // Local storage helpers
+    const LS = {
+      get(key, fallback){ try{ const v = localStorage.getItem(key); return v? JSON.parse(v): fallback; }catch{ return fallback }},
+      set(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+    };
+
+    // Consent system
+    // consentRequests: [{id, surrogateId, status: 'pending'|'approved'|'denied'}]
+    // consentMatches: {surrogateId: true}
+    const consentRequestsKey = 'kp_consent_requests';
+    const consentMatchesKey = 'kp_consent_matches';
+    function getRequests(){ return LS.get(consentRequestsKey, []); }
+    function saveRequests(arr){ LS.set(consentRequestsKey, arr); renderRequests(); }
+    function getMatches(){ return LS.get(consentMatchesKey, {}); }
+    function saveMatches(obj){ LS.set(consentMatchesKey, obj); syncChatSelect(); renderSurrogateCards(); }
+
+    function requestConsent(surrogateId){
+      const reqs = getRequests();
+      if(reqs.some(r=>r.surrogateId===surrogateId && r.status==='pending')){ toast('Request already pending'); return; }
+      reqs.push({id:'r_'+Date.now(), surrogateId, status:'pending', ts: Date.now()});
+      saveRequests(reqs);
+      toast('Consent requested. Awaiting approval.');
+    }
+    function approveConsent(reqId){
+      const reqs = getRequests();
+      const req = reqs.find(r=>r.id===reqId);
+      if(!req) return;
+      req.status = 'approved';
+      saveRequests(reqs);
+      const matches = getMatches();
+      matches[req.surrogateId] = true;
+      saveMatches(matches);
+      toast('Consent granted. Messaging unlocked.');
+    }
+    function denyConsent(reqId){
+      const reqs = getRequests();
+      const req = reqs.find(r=>r.id===reqId);
+      if(!req) return;
+      req.status = 'denied';
+      saveRequests(reqs);
+      toast('Consent denied.');
+    }
+
+    // Profiles
+    const parentProfileKey = 'kp_parent_profile';
+    const surrogateProfileKey = 'kp_surrogate_profile';
+    function saveParentProfile(){
+      const profile = {
+        name: document.getElementById('pName').value.trim(),
+        location: document.getElementById('pLocation').value.trim(),
+        eligibility: document.getElementById('pEligibility').value,
+        idAttest: document.getElementById('pIdAttest').value,
+        contact: document.getElementById('pContact').value.trim(),
+        verified: (document.getElementById('pEligibility').value.includes('Eligible')) && (document.getElementById('pIdAttest').value==='Provided')
+      };
+      LS.set(parentProfileKey, profile);
+      document.getElementById('parentProfileStatus').textContent = profile.verified?'Saved • Verified':'Saved';
+      toast('Parent profile saved locally.');
+    }
+    function saveSurrogateProfile(){
+      const profile = {
+        alias: document.getElementById('sAlias').value.trim(),
+        location: document.getElementById('sLocation').value.trim(),
+        age: parseInt(document.getElementById('sAge').value || '0',10),
+        experience: document.getElementById('sExperience').value,
+        eligibility: {
+          age: document.getElementById('sEligAge').checked,
+          health: document.getElementById('sEligHealth').checked,
+          priorBirth: document.getElementById('sEligBirth').checked,
+          psych: document.getElementById('sEligPsych').checked,
+        },
+        comp: {
+          base: parseInt(document.getElementById('sCompBase').value || '0',10),
+          extras: parseInt(document.getElementById('sCompExtras').value || '0',10),
+        }
+      };
+      LS.set(surrogateProfileKey, profile);
+      document.getElementById('surProfileStatus').textContent = 'Saved';
+      toast('Surrogate profile saved locally.');
+    }
+    document.getElementById('saveParentProfile').addEventListener('click', saveParentProfile);
+    document.getElementById('saveSurrogateProfile').addEventListener('click', saveSurrogateProfile);
+
+    // Surrogate search
+    function renderSurrogateCards(){
+      const container = document.getElementById('surrogateResults');
+      container.innerHTML = '';
+      const filters = {
+        location: document.getElementById('filterLocation').value.trim().toLowerCase(),
+        age: parseInt(document.getElementById('filterAge').value || '100',10),
+        experience: document.getElementById('filterExperience').value,
+        hasChildren: document.getElementById('filterHasChildren').value
+      };
+      const matches = getMatches();
+      const list = surrogates.filter(s=>{
+        if(filters.location && !s.location.toLowerCase().includes(filters.location)) return false;
+        if(s.age>filters.age) return false;
+        if(filters.experience && s.experience!==filters.experience) return false;
+        if(filters.hasChildren==='yes' && !s.hasChildren) return false;
+        return true;
+      }).map(s=>{
+        const score = computeMatchScore(s);
+        return {...s, score};
+      }).sort((a,b)=>b.score-a.score);
+      list.forEach(s=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        const isConsented = !!matches[s.id];
+        const showName = isConsented? (s.alias+' (contact enabled)') : s.alias;
+        card.innerHTML = `
+          <div class="row" style="justify-content:space-between;align-items:start">
+            <div>
+              <strong>${showName}</strong>
+              <div class="small muted">${s.location} • Age ${s.age} • ${s.experience.replace('-',' ')}</div>
+              <div class="row" style="margin-top:6px">
+                ${s.verified?'<span class="tag verified">Verified</span>':'<span class="tag">Unverified</span>'}
+                ${s.anonymousUntilConsent?'<span class="tag">Anonymous until consent</span>':''}
+                <span class="tag">Match score: ${s.score}%</span>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn secondary" ${isConsented?'disabled':''} onclick="requestConsent('${s.id}')">${isConsented?'Consented':'Request Consent'}</button>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <div class="small">Medical Summary: ${s.medSummary}</div>
+          <div class="small muted">Compensation (est.): $${s.compBase?.toLocaleString?.() || s.compBase}/${(s.compExtras||0).toLocaleString?.()} extras</div>
+        `;
+        container.appendChild(card);
+      });
+      syncChatSelect();
+    }
+    function computeMatchScore(s){
+      // Simple heuristic: proximity of location text to parent, age preference
+      const pp = LS.get(parentProfileKey, {location:''});
+      let score = 50;
+      if(pp.location && s.location && s.location.toLowerCase().includes(pp.location.toLowerCase().split(',')[0])) score += 20;
+      const maxAge = parseInt(document.getElementById('filterAge').value || '40',10);
+      score += Math.max(0, 20 - (s.age - Math.min(maxAge, s.age))*2);
+      if(s.verified) score += 10;
+      return Math.min(100, Math.max(0, Math.round(score)));
+    }
+    document.getElementById('applySurrogateFilters').addEventListener('click', renderSurrogateCards);
+    document.getElementById('resetSurrogateFilters').addEventListener('click', ()=>{
+      document.getElementById('filterLocation').value='';
+      document.getElementById('filterAge').value='40';
+      document.getElementById('filterExperience').value='';
+      document.getElementById('filterHasChildren').value='';
+      renderSurrogateCards();
+    });
+
+    // Consent requests rendering (surrogate role)
+    function renderRequests(){
+      const list = getRequests();
+      const container = document.getElementById('consentRequestsList');
+      container.innerHTML = '';
+      if(!list.length){ container.innerHTML = '<div class="muted small">No requests at the moment.</div>'; return; }
+      list.slice().reverse().forEach(r=>{
+        const s = surrogates.find(x=>x.id===r.surrogateId);
+        const el = document.createElement('div');
+        el.className='card';
+        el.innerHTML = `
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div>
+              <strong>Consent request</strong> <span class="small muted">for ${s?.alias || r.surrogateId}</span><br>
+              <span class="tag">Status: ${r.status}</span> <span class="small muted">${new Date(r.ts).toLocaleString()}</span>
+            </div>
+            <div class="row">
+              <button class="btn" ${r.status!=='pending'?'disabled':''} onclick="approveConsent('${r.id}')">Approve</button>
+              <button class="btn ghost" ${r.status!=='pending'?'disabled':''} onclick="denyConsent('${r.id}')">Deny</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    // Hospitals
+    const compareSelection = new Set();
+    function renderHospitalCards(list=hospitals){
+      const wrap = document.getElementById('hospitalList');
+      wrap.innerHTML = '';
+      list.forEach(h=>{
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="row" style="justify-content:space-between;align-items:start">
+            <div>
+              <strong>${h.name}</strong>
+              <div class="small muted">${h.location}</div>
+              <div class="row" style="margin-top:6px">
+                <span class="tag">$${h.priceRange.toLocaleString()} package</span>
+                <span class="tag">Success: ${h.successRate}%</span>
+                <span class="tag">Rating: ${h.rating} (${h.reviews})</span>
+              </div>
+            </div>
+            <div class="row" style="align-items:center">
+              <label class="small"><input type="checkbox" ${compareSelection.has(h.id)?'checked':''} onchange="toggleCompare('${h.id}')"> Compare</label>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <div class="small">Technologies: ${h.tech.join(', ')}</div>
+          <div class="small">Certifications: ${h.certifications.join(', ')}</div>
+        `;
+        wrap.appendChild(card);
+      });
+      // fill selector for appointments
+      const sel = document.getElementById('apptHospital');
+      sel.innerHTML = '';
+      hospitals.forEach(h=>{
+        const opt = document.createElement('option'); opt.value=h.id; opt.textContent=h.name; sel.appendChild(opt);
+      });
+    }
+    function toggleCompare(id){
+      if(compareSelection.has(id)) compareSelection.delete(id);
+      else{
+        if(compareSelection.size>=3){ toast('You can compare up to 3 hospitals'); return; }
+        compareSelection.add(id);
+      }
+      updateCompareBar();
+      renderHospitalCards();
+    }
+    function updateCompareBar(){
+      const names = [...compareSelection].map(id=>hospitals.find(h=>h.id===id)?.name || id);
+      document.getElementById('compareNames').textContent = names.join(' vs ');
+      const btn = document.getElementById('openCompare');
+      btn.disabled = compareSelection.size<2;
+    }
+    document.getElementById('openCompare').addEventListener('click', ()=>{
+      const selected = hospitals.filter(h=>compareSelection.has(h.id));
+      const tbl = document.getElementById('compareTable');
+      tbl.innerHTML = '';
+      const head = document.createElement('tr');
+      head.innerHTML = '<th>Metric</th>'+selected.map(h=>`<th>${h.name}</th>`).join('');
+      const rows = [
+        ['Location', ...selected.map(h=>h.location)],
+        ['Package Price (USD)', ...selected.map(h=>'$'+h.priceRange.toLocaleString())],
+        ['Success Rate', ...selected.map(h=>h.successRate+'%')],
+        ['Technologies', ...selected.map(h=>h.tech.join(', '))],
+        ['Certifications', ...selected.map(h=>h.certifications.join(', '))],
+        ['Rating (reviews)', ...selected.map(h=>`${h.rating} (${h.reviews})`)]
+      ];
+      tbl.appendChild(head);
+      rows.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td><strong>'+r[0]+'</strong></td>'+ r.slice(1).map(c=>'<td>'+c+'</td>').join('');
+        tbl.appendChild(tr);
+      });
+      openModal('compareModal');
+    });
+
+    // Filters for hospitals
+    document.getElementById('applyHospitalFilters').addEventListener('click', ()=>{
+      const loc = document.getElementById('hFilterLocation').value.trim().toLowerCase();
+      const maxp = parseInt(document.getElementById('hFilterMaxPrice').value||'0',10);
+      const list = hospitals.filter(h=>{
+        if(loc && !h.location.toLowerCase().includes(loc)) return false;
+        if(maxp && h.priceRange>maxp) return false;
+        return true;
+      });
+      renderHospitalCards(list);
+    });
+    document.getElementById('resetHospitalFilters').addEventListener('click', ()=>{
+      document.getElementById('hFilterLocation').value='';
+      document.getElementById('hFilterMaxPrice').value='';
+      renderHospitalCards(hospitals);
+    });
+
+    // Appointments
+    const apptKey='kp_appts';
+    function renderAppts(){
+      const list = LS.get(apptKey, []);
+      const wrap = document.getElementById('apptList');
+      wrap.innerHTML = '';
+      if(list.length===0){ wrap.innerHTML='<div class="small muted">No appointments scheduled.</div>'; return; }
+      list.slice().reverse().forEach(a=>{
+        const hospital = hospitals.find(h=>h.id===a.hospitalId)?.name || a.hospitalId;
+        const card = document.createElement('div');
+        card.className='card';
+        card.innerHTML = `<strong>${hospital}</strong><div class="small muted">${a.date} @ ${a.time}</div><div class="small">${a.notes||''}</div>`;
+        wrap.appendChild(card);
+      });
+    }
+    document.getElementById('saveAppt').addEventListener('click', ()=>{
+      const a = {
+        hospitalId: document.getElementById('apptHospital').value,
+        date: document.getElementById('apptDate').value,
+        time: document.getElementById('apptTime').value,
+        notes: document.getElementById('apptNotes').value.trim()
+      };
+      if(!a.hospitalId || !a.date || !a.time){ toast('Please select hospital, date, and time.'); return; }
+      const list = LS.get(apptKey, []); list.push(a); LS.set(apptKey, list);
+      toast('Appointment saved locally.'); renderAppts();
+    });
+    document.getElementById('clearAppts').addEventListener('click', ()=>{ LS.set(apptKey, []); renderAppts(); });
+
+    // Pricing estimate
+    function calcEstimate(){
+      const m = +document.getElementById('costMedical').value||0;
+      const h = +document.getElementById('costHospital').value||0;
+      const c = +document.getElementById('costComp').value||0;
+      const l = +document.getElementById('costLegal').value||0;
+      const r = +document.getElementById('costReserve').value||0;
+      const total = m+h+c+l+r;
+      const est = document.getElementById('estimate');
+      est.innerHTML = `
+        <strong>Total Estimated Cost: $${total.toLocaleString()}</strong>
+        <div class="grid two small" style="margin-top:8px">
+          <div>Medical Costs: $${m.toLocaleString()}</div>
+          <div>Hospital Fees: $${h.toLocaleString()}</div>
+          <div>Surrogate Compensation: $${c.toLocaleString()}</div>
+          <div>Legal & Administrative: $${l.toLocaleString()}</div>
+          <div>Contingency: $${r.toLocaleString()}</div>
+        </div>
+        <div class="notice small" style="margin-top:8px">Estimates are indicative; actual costs vary. No hidden costs policy applies.</div>
+      `;
+      const print = document.getElementById('estimatePrint');
+      print.classList.remove('hidden');
+      print.innerHTML = `
+        <div style="padding:20px;font-family:system-ui">
+          <h2>Surrogacy Cost Estimate</h2>
+          <p>Date: ${new Date().toLocaleString()}</p>
+          <hr>
+          <p><strong>Total: $${total.toLocaleString()}</strong></p>
+          <ul>
+            <li>Medical Costs: $${m.toLocaleString()}</li>
+            <li>Hospital Fees: $${h.toLocaleString()}</li>
+            <li>Surrogate Compensation: $${c.toLocaleString()}</li>
+            <li>Legal & Administrative: $${l.toLocaleString()}</li>
+            <li>Contingency: $${r.toLocaleString()}</li>
+          </ul>
+          <p style="font-size:12px;color:#555">This is an informational estimate only and not a binding quote. Consult participating hospitals and legal counsel.</p>
+        </div>
+      `;
+      return total;
+    }
+    document.getElementById('calcEstimate').addEventListener('click', ()=>{ calcEstimate(); toast('Estimate calculated'); });
+    document.getElementById('printEstimate').addEventListener('click', ()=>{
+      if(!document.getElementById('estimate').innerHTML.trim()){ calcEstimate(); }
+      window.print();
+    });
+
+    // Templates
+    const templates = {
+      agreement: `Surrogacy Agreement Outline (Educational Draft)
+- Parties: Intended Parent(s), Surrogate, Spouse/Partner (if applicable)
+- Jurisdiction and Governing Law
+- Medical Procedures and Providers
+- Expenses and Compensation (itemized)
+- Insurance Coverage
+- Parental Rights and Birth Certificate
+- Confidentiality and Privacy
+- Counseling and Psychological Support
+- Dispute Resolution
+IMPORTANT: This outline is for learning purposes only. Seek jurisdiction-specific legal advice from a qualified attorney.`,
+      consent: `Informed Consent Checklist (Educational)
+- Voluntary, informed consent documented in writing
+- Clear explanation of medical procedures and risks
+- Rights to ask questions and withdraw prior to legal commitments
+- Independent legal counsel for all parties
+- Privacy protections and data handling explained
+- Emergency and contingency plans
+IMPORTANT: This checklist is not legal or medical advice. Consult licensed professionals.`
+    };
+    function downloadTemplate(name, content){
+      const blob = new Blob([content], {type:'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name.replace(/\s+/g,'_')+'.txt';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+    }
+
+    // Secure messaging (local AES-GCM via Web Crypto)
+    async function deriveKey(pass, salt){
+      const enc = new TextEncoder();
+      const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(pass), {name:'PBKDF2'}, false, ['deriveKey']);
+      return crypto.subtle.deriveKey(
+        {name:'PBKDF2', salt, iterations:100000, hash:'SHA-256'},
+        keyMaterial,
+        {name:'AES-GCM', length:256},
+        false,
+        ['encrypt','decrypt']
+      );
+    }
+    function toB64(arr){ return btoa(String.fromCharCode(...new Uint8Array(arr))); }
+    function fromB64(b64){ return Uint8Array.from(atob(b64), c=>c.charCodeAt(0)); }
+    async function encryptMsg(pass, text){
+      const enc = new TextEncoder();
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const key = await deriveKey(pass, salt);
+      const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(text));
+      return {salt: toB64(salt), iv: toB64(iv), ct: toB64(new Uint8Array(ct))};
+    }
+    async function decryptMsg(pass, payload){
+      const dec = new TextDecoder();
+      const salt = fromB64(payload.salt); const iv = fromB64(payload.iv); const data = fromB64(payload.ct);
+      const key = await deriveKey(pass, salt);
+      const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, data);
+      return dec.decode(pt);
+    }
+    const chatKeyPrefix = 'kp_chat_'; // kp_chat_<surrogateId>
+    function chatKeyFor(id){ return chatKeyPrefix + id; }
+    function getChat(id){ return LS.get(chatKeyFor(id), []); }
+    function saveChat(id, arr){ LS.set(chatKeyFor(id), arr); }
+
+    function syncChatSelect(){
+      const sel = document.getElementById('chatSurrogateId');
+      const matches = getMatches();
+      const allowed = surrogates.filter(s=>matches[s.id]);
+      sel.innerHTML = '';
+      if(allowed.length===0){
+        sel.innerHTML = '<option value="">No consents yet</option>';
+      }else{
+        allowed.forEach(s=>{
+          const o = document.createElement('option');
+          o.value=s.id; o.textContent=s.alias;
+          sel.appendChild(o);
+        });
+      }
+      document.getElementById('chatBox').classList.toggle('hidden', allowed.length===0);
+    }
+    function renderChatLog(id){
+      const log = document.getElementById('chatLog');
+      const msgs = getChat(id);
+      log.innerHTML = '';
+      msgs.forEach(m=>{
+        const div = document.createElement('div');
+        div.className='small';
+        div.innerHTML = `<div class="tag" style="margin:4px 0; ${m.from==='you'?'background:#e6f5f1':'background:#f1f7f9'}"><strong>${m.from}</strong>: <span>${m.text?escapeHtml(m.text):'(encrypted)'}</span> <span class="muted">• ${new Date(m.ts).toLocaleTimeString()}</span></div>`;
+        log.appendChild(div);
+      });
+      log.scrollTop = log.scrollHeight;
+    }
+    function escapeHtml(s){ return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+
+    let unlockedChat = {id:null, pass:null};
+    document.getElementById('unlockChatBtn').addEventListener('click', async ()=>{
+      const id = document.getElementById('chatSurrogateId').value;
+      const pass = document.getElementById('chatPass').value;
+      if(!id || !pass){ toast('Select a conversation and enter a passphrase.'); return; }
+      // test decrypt if there are messages; otherwise accept and mark unlocked
+      try{
+        const msgs = getChat(id);
+        for(const m of msgs.filter(x=>x.ct)){
+          await decryptMsg(pass, m.ct);
+          break;
+        }
+        unlockedChat = {id, pass};
+        // decrypt into display texts for existing msgs
+        const decd = [];
+        for(const m of msgs){
+          if(m.ct){
+            try{ const text = await decryptMsg(pass, m.ct); decd.push({...m, text, ct:null}); }
+            catch{ decd.push(m); }
+          }else decd.push(m);
+        }
+        saveChat(id, decd);
+        renderChatLog(id);
+        toast('Conversation unlocked.');
+      }catch(e){
+        toast('Incorrect passphrase for existing messages.');
+      }
+    });
+    document.getElementById('sendMsgBtn').addEventListener('click', async ()=>{
+      const id = unlockedChat.id; const pass = unlockedChat.pass;
+      if(!id || !pass){ toast('Unlock conversation first.'); return; }
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim(); if(!text) return;
+      const msgs = getChat(id);
+      const enc = await encryptMsg(pass, text);
+      msgs.push({from:'you', ts: Date.now(), ct: enc});
+      saveChat(id, msgs);
+      // Show decrypted view for you
+      const display = getChat(id);
+      const last = display[display.length-1];
+      try{ last.text = await decryptMsg(pass, last.ct); last.ct = null; }catch{}
+      saveChat(id, display);
+      input.value = '';
+      renderChatLog(id);
+    });
+    document.getElementById('clearChatBtn').addEventListener('click', ()=>{
+      const id = document.getElementById('chatSurrogateId').value;
+      if(!id){ toast('No conversation selected.'); return; }
+      saveChat(id, []);
+      renderChatLog(id);
+      toast('Chat cleared locally.');
+    });
+
+    // Community Q&A
+    const qKey = 'kp_questions';
+    const banned = ['hate','harass'];
+    function moderate(text){
+      const lower = text.toLowerCase();
+      if(banned.some(b=>lower.includes(b))) return 'Please avoid harmful language.';
+      if(/\b(\d{3}-?\d{2}-?\d{4}|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\b/.test(text)) return 'Please avoid sharing personal identifiers.';
+      return null;
+    }
+    function renderQs(){
+      const qs = LS.get(qKey, []);
+      const wrap = document.getElementById('qList');
+      wrap.innerHTML = '';
+      if(!qs.length){ wrap.innerHTML='<div class="small muted">No questions yet.</div>'; return; }
+      qs.slice().reverse().forEach(q=>{
+        const div = document.createElement('div');
+        div.className='card';
+        div.innerHTML = `<div class="small muted">${new Date(q.ts).toLocaleString()}</div><div>${escapeHtml(q.text)}</div>`;
+        wrap.appendChild(div);
+      });
+    }
+    document.getElementById('postQuestion').addEventListener('click', ()=>{
+      const t = document.getElementById('qBody').value.trim();
+      if(t.length<8){ toast('Please enter a longer question.'); return; }
+      const issue = moderate(t);
+      if(issue){ toast(issue); return; }
+      const qs = LS.get(qKey, []); qs.push({id: 'q'+Date.now(), text:t, ts:Date.now()}); LS.set(qKey, qs);
+      document.getElementById('qBody').value=''; renderQs(); toast('Posted.');
+    });
+
+    // Profile modal
+    document.getElementById('openProfileBtn').addEventListener('click', ()=>{
+      const role = document.getElementById('role').value;
+      const content = document.getElementById('profileContent');
+      content.innerHTML = '';
+      if(role==='parent'){
+        const p = LS.get(parentProfileKey, null);
+        content.innerHTML = p? `
+          <div class="ok small">Profile saved locally.</div>
+          <ul>
+            <li>Name: ${escapeHtml(p.name||'')}</li>
+            <li>Location: ${escapeHtml(p.location||'')}</li>
+            <li>Eligibility: ${escapeHtml(p.eligibility||'')}</li>
+            <li>ID Attestation: ${escapeHtml(p.idAttest||'')}</li>
+            <li>Verified: ${p.verified?'Yes':'No'}</li>
+          </ul>
+        ` : `<div class="warn small">No profile found. Visit "Intended Parents" to create one.</div>`;
+      } else if(role==='surrogate'){
+        const s = LS.get(surrogateProfileKey, null);
+        content.innerHTML = s? `
+          <div class="ok small">Profile saved locally.</div>
+          <ul>
+            <li>Alias: ${escapeHtml(s.alias||'')}</li>
+            <li>Location: ${escapeHtml(s.location||'')}</li>
+            <li>Age: ${s.age||''}</li>
+            <li>Experience: ${escapeHtml(s.experience||'')}</li>
+            <li>Compensation: $${(s.comp?.base||0).toLocaleString()} + $${(s.comp?.extras||0).toLocaleString()} extras</li>
+          </ul>
+        ` : `<div class="warn small">No profile found. Visit "Surrogate Mothers" to create one.</div>`;
+      } else {
+        content.innerHTML = `
+          <div class="notice small">Hospital/Clinic role features include directory management, certification upload, and appointment handling in a full implementation.</div>
+        `;
+      }
+      openModal('profileModal');
+    });
+
+    function openModal(id){ document.getElementById(id).style.display='flex'; }
+    function closeModal(id){ document.getElementById(id).style.display='none'; }
+    window.closeModal = closeModal; // expose for buttons
+
+    // Compare bar
+    function initCompareBar(){ updateCompareBar(); }
+
+    // Role-specific hints (optional: could toggle visibility)
+    document.getElementById('role').addEventListener('change', ()=>{
+      const r = document.getElementById('role').value;
+      document.querySelectorAll('#surrogates, #parents').forEach(sec=>sec.classList.remove('hidden'));
+      if(r==='parent'){ /* no-op */ }
+      if(r==='surrogate'){ /* show consent requests prominently */ }
+      if(r==='hospital'){ /* in full build, we’d show hospital admin; here we show directory */ }
+    });
+
+    // Initial renders
+    renderSurrogateCards();
+    renderRequests();
+    renderHospitalCards();
+    renderAppts();
+    initCompareBar();
+    syncChatSelect();
+
+    // Accessibility: keep hash navigation clean
+    window.addEventListener('hashchange', ()=>{ /* reserved */ });
+  </script>
+</body>
+</html>
